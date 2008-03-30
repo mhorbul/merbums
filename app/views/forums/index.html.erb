@@ -14,14 +14,14 @@
 <% @forums.each do |forum| %>
   <tr>
     <td>
-      <%= link_to forum.name, url(:forum_topics, :forum_id => forum), :class => "forum_title" %>
-      <p><%= forum.topics_count %> Topics - <%= forum.posts_count %> Posts</p>
+      <%= link_to forum.name, url(:forum,forum), :class => "forum_title" %>
+      <p><%= forum.topics.size %> Topics - <%= forum.posts.size %> Posts</p>
       <%= forum.description_html %>
       <p><small></small></p>
     </td>
     <td class="last_update">
       <p>
-        <%= forum.posts_count == 0 ? "Never" : forum.latest_post.updated_at %>
+        <%= forum.posts.size == 0 ? "Never" : "#{forum.latest_post.updated_at} + #{forum.latest_post.topic.title}" %>
       </p>
     </td>
   </tr>

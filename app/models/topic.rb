@@ -12,11 +12,7 @@ class Topic < ActiveRecord::Base
   attr_accessor :body
   
   def to_param
-    permalink
-  end
-  
-  def self.find_by_param(*args)
-    find_by_permalink *args
+    "#{id}-#{permalink}"
   end
 
   def create_permalink

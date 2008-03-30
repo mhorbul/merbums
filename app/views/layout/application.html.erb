@@ -29,10 +29,10 @@
       <% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
       <% if flash[:error] %><div class="error"><%= flash[:error] %></div><% end %>
       <% if flash[:message] %><div class="notice"><%= flash[:message] %></div><% end %>
-      <% if controller_name == 'topics' && action_name == 'index' %>
+      <% if controller_name == 'forums' && action_name == 'show' %>
         <p><%= link_to "Home", url(:forums) %></p>
       <% elsif controller_name == 'topics' && action_name == 'show' %>
-        <p><%= link_to "Home", url(:forums) %> - <%= link_to @forum.name, url(:forum_topics,:forum_id => @forum) %></p>
+        <p><%= link_to "Home", url(:forums) %> - <%= link_to @forum.name, url(:forum, @forum) %></p>
       <% end %>
     
       <%= catch_content :for_layout %>

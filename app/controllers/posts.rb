@@ -4,8 +4,8 @@ class Posts < Application
   before :find_forum_and_topic
   
   def find_forum_and_topic
-    @forum = Forum.find_by_param(params[:forum_id])
-    @topic = Topic.find_by_param(params[:topic_id])
+    @forum = Forum.find(params[:forum_id])
+    @topic = Topic.find(params[:topic_id])
   end
 
   def create

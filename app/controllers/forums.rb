@@ -3,12 +3,12 @@ class Forums < Application
   before :login_required, :exclude => [:index, :show]
   
   def index
-    @forums = Forum.find(:all, :order => "position", :include => :latest_post)
+    @forums = Forum.find(:all, :order => "position", :include => [:topics, [:latest_post => :topic]])
     display @forums
   end
 
   def show
-    @forum = Forum.find_by_param(params[:id], :include => :topics)
+    @forum = Forum.find(params[:id], :include => [:topics => [:posts, :user]])
     raise NotFound unless @forum
     display @forum
   end
@@ -31,13 +31,13 @@ class Forums < Application
 
   def edit
     only_provides :html
-    @forum = Forum.find_by_param(params[:id])
+    @forum = Forum.find(params[:id])
     raise NotFound unless @forum
     render
   end
 
   def update
-    @forum = Forum.find_by_param(params[:id])
+    @forum = Forum.find(params[:id])
     raise NotFound unless @forum
     if @forum.update_attributes(params[:forum])
       flash[:notice] = @forum.name + " updated successfully"
@@ -48,7 +48,7 @@ class Forums < Application
   end
 
   def destroy
-    @forum = Forum.find_by_param(params[:id])
+    @forum = Forum.find(params[:id])
     raise NotFound unless @forum
     if @forum.destroy
       redirect url(:forums)
