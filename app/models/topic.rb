@@ -4,7 +4,8 @@ class Topic < ActiveRecord::Base
   belongs_to :forum, :counter_cache => true
   belongs_to :user, :counter_cache => true
   
-  validates_presence_of :title,:body
+  validates_presence_of :title
+  validates_presence_of :body, :if => :new_record?
   
   after_create  :add_first_post
   before_save   :create_permalink

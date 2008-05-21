@@ -1,3 +1,7 @@
-<h1>Topics controller, edit action</h1>
+<h2>Editing the Topic: <%= @topic.title %></h2>
 
-<p>Edit this file in <tt>app/views/topics/edit.html.erb</tt></p>
+<% form_for @topic, :action => url(:forum_topic, :forum_id => @forum, :id => @topic) do %>
+  <p><%= text_control :title, :label => "Title" %></p>
+  <p><%= submit_button "Submit" %></p>
+<% end %>
+

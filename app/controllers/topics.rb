@@ -30,7 +30,7 @@ class Topics < Application
     @topic = @forum.topics.new(params[:topic].merge(:user => current_user))
     if @topic.save
       flash[:notice] = @topic.title + " created successfully"
-      redirect url(:forum_topic, { :forum_id => @forum, :id => @topic })
+      redirect url(:forum_topic, :forum_id => @forum, :id => @topic)
     else
       render :new
     end
@@ -48,7 +48,7 @@ class Topics < Application
     raise NotFound unless @topic
     if @topic.update_attributes(params[:topic])
       flash[:notice] = @topic.title + " updated successfully"
-      redirect url(:forum_topic_posts,:topic_id => @topic)
+      redirect url(:forum_topic, :forum_id => @topic.forum, :id => @topic)
     else
       raise BadRequest
     end
@@ -58,7 +58,7 @@ class Topics < Application
     @topic = Topic.find(params[:id])
     raise NotFound unless @topic
     if @topic.destroy
-      redirect url(:topics)
+      redirect url(:forum, @topic.forum)
     else
       raise BadRequest
     end

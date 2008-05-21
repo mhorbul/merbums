@@ -1,5 +1,10 @@
 <h2><%= @topic.title %></h2>
 
+<%= link_to 'Edit', url(:edit_forum_topic, :forum_id => @forum, :id => @topic), :class => 'edit' %>
+<% form_for @topic, :action => url(:forum_topic, :forum_id => @forum, :id => @topic), :method => :delete do %>
+  <%= submit_button 'Delete' %>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -11,15 +16,16 @@
     <% @topic.posts.each do |post| %>
       <tr>
         <td class="author">
-          <p><%= image_tag post.user.gravatar %><br />
-          <%= post.user.login %><br />
-          <%= post.user.posts.size %> Posts</p>
+          <%= image_tag post.user.gravatar, :class => 'avatar' %>
+          <span class="login"><%= post.user.login %></span>
+          <span class="no-of-posts"><%= post.user.posts.size %> Posts</span>
+          <%= edit_post_link(@forum, @topic, post) if can_edit?(post) %>
         </td>
         <td>
-          <div><%= link_to "Edit", url(:edit_forum_topic_post,{ :forum_id => @forum,:topic_id => @topic, :id => post} ) if can_edit?(post) %></div><%= post.body_html %>
+          <%= post.body_html %>
           <%= tag :p, "Attachments" unless post.attachments.empty? %>
           <% post.attachments.each do |attachment| %>
-          <p><%= link_to attachment.title, attachment.path %></p>
+            <p><%= link_to attachment.title, attachment.path %></p>
           <% end %>
         </td>
       </tr>
