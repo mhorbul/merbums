@@ -12,7 +12,7 @@ class Forum < ActiveRecord::Base
   validates_presence_of :name, :description
   
   def to_param
-    "#{id}-#{permalink}"
+    id ? "#{id}-#{permalink}" : nil
   end
   
   def create_permalink
