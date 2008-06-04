@@ -8,6 +8,11 @@ class Users < Application
     display @users
   end
   
+  def show
+    @user = User.find(params[:id])
+    display @user
+  end
+  
   def new
     only_provides :html
     @user = User.new(params[:user] || {})

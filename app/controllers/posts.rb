@@ -9,7 +9,7 @@ class Posts < Application
   end
 
   def create
-    @post = Post.new(params[:post].merge({ :user => current_user, :forum => @forum, :topic => @topic }))
+    @post = Post.new(params[:post].merge({ :user => current_user, :forum_id => @forum.id, :topic_id => @topic.id }))
     if @post.save
       flash[:notice] = "Post Created"
       redirect url(:forum_topic, { :forum_id => @forum, :id => @topic })
